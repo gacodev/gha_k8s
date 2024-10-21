@@ -1,56 +1,18 @@
----
 name: Hpa-runners
 on:
   push:
     branches: [ main ]
 jobs:
   build:
-    name: Build 1
     runs-on: gha-k8s-runner
+    strategy:
+      matrix:
+        build-number: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
     - name: Build docker
       run: |
-        docker build -t test .
-  build-2:
-    name: Build 2
-    runs-on: gha-k8s-runner
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Build docker
-      run: |
-        docker build -t test .
-  build-3:
-    name: Build 3
-    runs-on: gha-k8s-runner
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Build docker
-      run: |
-        docker build -t test .
-  build-4:
-    name: Build 4
-    runs-on: gha-k8s-runner
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Build docker
-      run: |
-        docker build -t test .
-  build-5:
-    name: Build 5
-    runs-on: gha-k8s-runner
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Build docker
-      run: |
-        docker build -t test .
+        echo "Building docker for build number: ${{ matrix.build-number }}"
+        docker build -t test-${{ matrix.build-number }} .
